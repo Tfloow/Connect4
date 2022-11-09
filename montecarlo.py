@@ -6,7 +6,7 @@ import time
 t = time.time()
 
 N = 10 # Nb repetitions
-nb_games = [10, 100, 1000, 10000]
+nb_games = [10, 100, 1000] # to be faster I skiped the 10 000 while testing
 # Array with the percentage of success for player 1 for [10, 100, 1000, 10000] games, N times each
 win1 = np.zeros((N, len(nb_games)))
 # Array with the percentage of draws for player 1 for [10, 100, 1000, 10000] games, N times each
@@ -17,8 +17,28 @@ draw = np.zeros((N, len(nb_games)))
 ##################################
 
 # To do : fill in arrays win1 and draw
-# In order to do so, simulate games with the function connect4.run_game() 
+# In order to do so, simulate games with the function connect4.run_game()
+index =  -1
 
+for num in nb_games:
+    index += 1
+    for rep in range(N):
+        print(rep, index)
+        for _ in range(num):
+            result = connect4.run_game()
+            if result == 0:
+                draw[rep][index] += 1
+            elif result == 1:
+                win1[rep][index] += 1
+        draw[rep][index]/= num
+        win1[rep][index]/= num
+    print(num)
+win1 *= 100
+draw *= 100
+
+print("____")
+print(draw, win1)
+print("___")
 
 ################################
 ### END : To do for students ###
