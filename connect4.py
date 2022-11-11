@@ -154,7 +154,7 @@ def run_game():
     # Run the game. In 21 turns, the board is full and the game is over
     the_board = np.full((6, 7), 0)
     for x in range(21):
-        #print_board(the_board)
+        print_board(the_board)
         #print('Player 🔴 turn:')
         ####################################################################################
         ### Replace the line below with your own AI for sections 3 and 4 of the homework ###
