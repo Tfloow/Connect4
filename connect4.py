@@ -1,5 +1,6 @@
 import numpy as np
 import random as rd
+import ai_student
 
 # The basic AI used for section 2 of the homework
 def ai_random(arg_board, player):
@@ -155,6 +156,9 @@ def run_game():
     the_board = np.full((6, 7), 0)
     for x in range(21):
         print_board(the_board)
+        print(the_board)
+        print(ai_student.getPlacing(the_board, 1))
+        print(ai_student.fallingPlace(the_board))
         #print('Player 🔴 turn:')
         ####################################################################################
         ### Replace the line below with your own AI for sections 3 and 4 of the homework ###
@@ -183,7 +187,7 @@ def run_game():
     #print('Draw!')
     return 0
 
-
+run_game()
 
 
 
