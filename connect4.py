@@ -155,15 +155,12 @@ def run_game():
     # Run the game. In 21 turns, the board is full and the game is over
     the_board = np.full((6, 7), 0)
     for x in range(21):
-        print_board(the_board)
-        print(the_board)
-        print(ai_student.getPlacing(the_board, 1))
-        print(ai_student.fallingPlace(the_board))
+        #print_board(the_board)
         #print('Player 🔴 turn:')
         ####################################################################################
         ### Replace the line below with your own AI for sections 3 and 4 of the homework ###
         ####################################################################################
-        move1 = ai_random(the_board, 1)
+        move1 = ai_student.ai_student(the_board, 1)[0]#ai_random(the_board, 1)
         if the_board[0][move1] != 0:
             print('ERROR: The chosen column is already full.')
         the_board = update_board(the_board, move1, 1)
@@ -187,7 +184,8 @@ def run_game():
     #print('Draw!')
     return 0
 
-run_game()
+print(run_game())
+
 
 
 

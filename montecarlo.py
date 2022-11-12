@@ -6,7 +6,7 @@ import time
 t = time.time()
 
 N = 10 # Nb repetitions
-nb_games = [10, 100, 1000, 10000] # to be faster I skiped the 10 000 while testing
+nb_games = [10, 100, 1000] # to be faster I skiped the 10 000 while testing
 # Array with the percentage of success for player 1 for [10, 100, 1000, 10000] games, N times each
 win1 = np.zeros((N, len(nb_games)))
 # Array with the percentage of draws for player 1 for [10, 100, 1000, 10000] games, N times each
