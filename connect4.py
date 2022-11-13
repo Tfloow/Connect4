@@ -268,6 +268,8 @@ def run_game():
         ####################################################################################
         print_board(the_board)
 
+        prevKey = keying
+
         with Listener(on_click=on_click) as l:
             Timer(5, l.stop).start()
             l.join()
@@ -299,7 +301,12 @@ def run_game():
 
     return 0
 
-print(run_game())
+result = run_game()
+turtle.penup()
+turtle.goto(0,240)
+turtle.pendown()
+turtle.write(f"Player {result} win !", font=("Arial", 30, "normal"))
+
 turtle.done()
 
 
