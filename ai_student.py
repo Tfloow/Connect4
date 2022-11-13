@@ -115,7 +115,7 @@ def possibleMove(board, player):
   move = futureCheck(board, player)
   danger = futureCheck(board, opp)
 
-  if danger[0] >= 1000:
+  if danger[0] >= 1000 and move[0] < 1000:
     print("dangerous move")
     print(danger[1])
     return danger[1]
@@ -148,7 +148,7 @@ def futureCheck(board, player):
     possibleBoard = board.copy()
     possibleBoard[possibleFuture[1]][possibleFuture[0]] = player
     bitMinePossible = getBit(getPlacing(possibleBoard, player))
-    newBit = (len(bitMinePossible.get(2, []))-len(bitMine.get(2,[])))*2 + (len(bitMinePossible.get(3, []))-len(bitMine.get(3,[])))*3 + (len(bitMinePossible.get(4, []))-len(bitMine.get(4,[])))*1000
+    newBit = (len(bitMinePossible.get(2, []))-len(bitMine.get(2,[])))*2 + (len(bitMinePossible.get(3, []))-len(bitMine.get(3,[])))*4 + (len(bitMinePossible.get(4, []))-len(bitMine.get(4,[])))*1000
     if newBit > maxAdv:
       maxAdv = newBit
       adv = possibleFuture
