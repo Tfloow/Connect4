@@ -1,6 +1,90 @@
 import numpy as np
 import random as rd
 import ai_student
+import math
+
+import turtle
+from threading import Timer
+
+from pynput.mouse import Listener
+
+keying = (952,800)
+
+turtle.goto(0,0)
+
+def on_move(x, y):
+    pass
+
+
+def on_click(x, y, button, pressed):
+    global keying
+    keying = (x,y)
+
+
+def on_scroll(x, y, dx, dy):
+    pass
+def Transforming(A):
+    return (A[0]-970)*(0.62), (590-A[1])*(0.65)
+
+ecran = turtle.Screen()
+turtle.speed(0)
+
+def makeLine():
+    base = turtle.pos()
+    turtle.begin_fill()
+    turtle.setheading(0)
+    turtle.forward(600)
+    turtle.setheading(90)
+    turtle.forward(5)
+    turtle.goto(base[0], base[1]+5)
+    turtle.end_fill()
+
+def makeColumn():
+    base = turtle.pos()
+    turtle.begin_fill()
+    turtle.setheading(90)
+    turtle.forward(480)
+    turtle.setheading(0)
+    turtle.forward(5)
+    turtle.goto(base[0]+5, base[1])
+    turtle.end_fill()
+
+def Piece(line, colum, player):
+    color = "blue"
+    if player == 1:
+        color = "red"
+    turtle.color(color)
+    origin = (-300, -250)
+    turtle.penup()
+    turtle.goto(-258+colum*86, -239+line*80)
+    turtle.pendown()
+    turtle.begin_fill()
+    turtle.circle(30)
+    turtle.end_fill()
+
+def posToRC(x,y):
+    print(math.floor((x + 300)/85), math.floor((y+250)/80))
+    return math.floor((x + 300)/85), math.floor((y+250)/80)
+
+turtle.penup()
+turtle.goto(-300, -250)
+turtle.pendown()
+makeColumn()
+
+for f in range(7):
+    turtle.penup()
+    turtle.goto(-300,-250+f*80)
+    turtle.pendown()
+    makeLine()
+    turtle.penup()
+    turtle.goto(-300+(f+1)*85, -250)
+    turtle.pendown()
+    makeColumn()
+
+turtle.setheading(0)
+
+
+"""ecran.onclick(turtle.goto)"""
 
 # The basic AI used for section 2 of the homework
 def ai_random(arg_board, player):
@@ -163,9 +247,18 @@ def run_game():
         move1 = ai_student.ai_student(the_board, 1)[0]#ai_random(the_board, 1)
         if the_board[0][move1] != 0:
             print('ERROR: The chosen column is already full.')
+        prev = the_board
         the_board = update_board(the_board, move1, 1)
+        i = 0
+        new = the_board-prev
+        while sum(new[i]) == 0:
+            i += 1
+        print(5-i, move1)
+        Piece(5-i, move1, 1)
+        print("done")
         #print_board(the_board) # Uncomment this line for visualisation / debugging
         if check_win(the_board, move1, 1):
+            print_board(the_board)
             #print('Player 🔴 won!')
             return 1
     
@@ -173,18 +266,42 @@ def run_game():
         ####################################################################################
         ### Replace the line below with your own AI for sections 3 and 4 of the homework ###
         ####################################################################################
-        move2 = ai_random(the_board, 2)
+        print_board(the_board)
+
+        with Listener(on_click=on_click) as l:
+            Timer(5, l.stop).start()
+            l.join()
+            print('5 seconds passed')
+        newCoord = Transforming(keying)
+        move2 = posToRC(newCoord[1], newCoord[0])
+        print(f"mon move {move2}")
+        # int(input("what column to play ?")) ai_random(the_board, 2) added player possibility to play
+
+        move2 = move2[1]
         if the_board[0][move2] != 0:
             print('ERROR: The chosen column is already full.')
+        prev = the_board
         the_board = update_board(the_board, move2, 2)
+
+        i = 0
+        new = the_board - prev
+        print(new)
+        while sum(new[i]) == 0:
+            i += 1
+        print(i, move2)
+        Piece(5-i, move2, 2)
         #print_board(the_board)  # Uncomment this line for visualisation / debugging
         if check_win(the_board, move2, 2):
+            print_board(the_board)
             #print('Player 🔵 won!')
             return 2
     #print('Draw!')
+
     return 0
 
 print(run_game())
+turtle.done()
+
 
 
 
